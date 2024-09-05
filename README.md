@@ -1,9 +1,11 @@
 # magicmirror
 
+
 Note: 
 
 
 The project has been tested on Android.
+
 
 Architecture : 
 
@@ -17,10 +19,12 @@ There are two features here : workout and WorkoutList.
 They each have their own repository , controller and screen.
 
 
+
 State management : 
 
 I have used Riverpod as my preferred choice of state management. I have used this because it is scalable , immutable and is easy to follow. 
 With proper architecture in place as above and using riverpod as in this project ,  we can achieve what  Bloc state management does in separation of concerns  , but with less boilerplate and easier to understand .
+
 
 Navigation : 
 
