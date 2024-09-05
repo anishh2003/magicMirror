@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magicmirror/data/dropDownOptions.dart';
 import 'package:magicmirror/feature/workout/controller/workout_controller.dart';
+import 'package:magicmirror/feature/workoutList/controller/workout_list_controller.dart';
 import 'package:magicmirror/model/exercise_set.dart';
 import 'package:magicmirror/model/workout.dart';
 
@@ -125,7 +126,15 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
       sets: ref.read(exerciseSetControllerProvider),
     );
 
-    //TODO : add or update workout and pop screen
+    final workoutController = ref.read(workoutListControllerProvider.notifier);
+
+    if (widget.workout == null) {
+      workoutController.addWorkout(workout);
+    } else {
+      workoutController.updateWorkout(workout);
+    }
+
+    Navigator.of(context).pop();
   }
 
   @override
