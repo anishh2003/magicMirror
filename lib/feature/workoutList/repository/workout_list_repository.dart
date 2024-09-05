@@ -1,4 +1,9 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magicmirror/model/workout.dart';
+
+final workoutListRepositoryProvider = Provider(
+  (_) => WorkoutListRepository(),
+);
 
 class WorkoutListRepository {
   final List<Workout> _workouts = [];
