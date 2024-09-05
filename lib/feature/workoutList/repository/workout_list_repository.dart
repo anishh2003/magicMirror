@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magicmirror/model/workout.dart';
 
@@ -24,5 +25,14 @@ class WorkoutListRepository {
 
   void deleteWorkout(String id) {
     _workouts.removeWhere((workout) => workout.id == id);
+  }
+
+  Workout? getWorkoutById(String id) {
+    Workout? workout = _workouts.firstWhereOrNull((item) => item.id == id);
+    if (workout == null) {
+      return null;
+    } else {
+      return workout;
+    }
   }
 }
