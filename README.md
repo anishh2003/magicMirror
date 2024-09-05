@@ -4,6 +4,7 @@ Note:
 The project has been tested on Android.
 
 Architecture : 
+
 I have implemented a feature based approach to this project.
 By doing this , we can achieve separation between repository, business logic and screen.
 By doing it this way , we can make changes easily to the respective sections without it directly affecting another.
@@ -15,13 +16,18 @@ They each have their own repository , controller and screen.
 
 
 State management : 
+
 I have used Riverpod as my preferred choice of state management. I have used this because it is scalable , immutable and is easy to follow. 
 With proper architecture in place as above and using riverpod as in this project ,  we can achieve what  Bloc state management does in separation of concerns  , but with less boilerplate and easier to understand .
 
 Navigation : 
+
+
 Routemaster (similar to goRouter) has been used here as it is a versatile package which can be used for both web and mobile navigation. It keeps all navigation logic in one page. 
 
 Testing : 
+
+
 I did unit , widget testing for workout_screen.
 
 
