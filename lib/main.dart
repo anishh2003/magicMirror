@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:magicmirror/feature/workoutList/screen/workout_list_screen.dart';
+import 'package:magicmirror/router/router.dart';
+import 'package:routemaster/routemaster.dart';
 
 void main() {
   runApp(
@@ -15,12 +16,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: WorkoutListScreen(),
-        ),
+    return MaterialApp.router(
+      title: 'Workout Tracker',
+      routerDelegate: RoutemasterDelegate(
+        routesBuilder: (context) => routesList,
       ),
+      routeInformationParser: const RoutemasterParser(),
     );
   }
 }

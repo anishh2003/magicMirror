@@ -5,6 +5,8 @@ import 'package:magicmirror/feature/workout/controller/workout_controller.dart';
 import 'package:magicmirror/feature/workoutList/controller/workout_list_controller.dart';
 import 'package:magicmirror/model/exercise_set.dart';
 import 'package:magicmirror/model/workout.dart';
+import 'package:routemaster/routemaster.dart';
+import 'package:uuid/uuid.dart';
 
 class WorkoutScreen extends ConsumerStatefulWidget {
   const WorkoutScreen({this.workout, super.key});
@@ -89,7 +91,7 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    Navigator.of(ctx).pop();
+                    Routemaster.of(ctx).pop();
                   },
                   child: const Text('Cancel'),
                 ),
@@ -106,7 +108,7 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
 
                     // Trigger a UI update in the WorkoutScreen
                     setState(() {});
-                    Navigator.of(ctx).pop();
+                    Routemaster.of(ctx).pop();
                     setState(() {});
                   },
                   child: const Text('Save'),
@@ -120,8 +122,9 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
   }
 
   void _saveWorkout() {
+    var uuid = const Uuid();
     final workout = Workout(
-      id: widget.workout?.id ?? UniqueKey().toString(),
+      id: widget.workout?.id ?? uuid.v4(),
       date: DateTime.now(),
       sets: ref.read(exerciseSetControllerProvider),
     );
@@ -134,7 +137,7 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
       workoutController.updateWorkout(workout);
     }
 
-    Navigator.of(context).pop();
+    Routemaster.of(context).pop();
   }
 
   @override

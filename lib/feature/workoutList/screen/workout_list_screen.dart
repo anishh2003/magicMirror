@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magicmirror/feature/workout/controller/workout_controller.dart';
-import 'package:magicmirror/feature/workout/screen/workout_screen.dart';
 import 'package:magicmirror/feature/workoutList/controller/workout_list_controller.dart';
+import 'package:routemaster/routemaster.dart';
 
 class WorkoutListScreen extends ConsumerWidget {
   const WorkoutListScreen({super.key});
@@ -20,11 +20,8 @@ class WorkoutListScreen extends ConsumerWidget {
           onPressed: () {
             ref.read(exerciseSetControllerProvider.notifier).clearSets();
             ref.read(currentWorkoutProvider.notifier).update((state) => null);
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => const WorkoutScreen(),
-              ),
-            );
+
+            Routemaster.of(context).push('/workout/${null}');
           }),
       body: ListView.builder(
         itemCount: workoutList.length,
@@ -41,11 +38,13 @@ class WorkoutListScreen extends ConsumerWidget {
               ref
                   .read(currentWorkoutProvider.notifier)
                   .update((state) => workout);
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => WorkoutScreen(workout: workout),
-                ),
-              );
+
+              Routemaster.of(context).push('/workout/${workout.id}');
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (_) => WorkoutScreen(workout: workout),
+              //   ),
+              // );
             },
             trailing: IconButton(
               icon: const Icon(Icons.delete),
