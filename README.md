@@ -1,6 +1,8 @@
 # magicmirror
 
 Note: 
+
+
 The project has been tested on Android.
 
 Architecture : 
