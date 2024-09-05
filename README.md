@@ -35,7 +35,7 @@ Testing :
 
 
 I did unit , widget testing for workout_screen.
-
+Integration test for end to end
 
 
 Third party packages used : 
