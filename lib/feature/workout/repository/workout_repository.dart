@@ -1,4 +1,9 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magicmirror/model/exercise_set.dart';
+
+final setRepositoryProvider = Provider(
+  (_) => SetRepository(),
+);
 
 class SetRepository {
   List<ExerciseSet> _sets = [];
