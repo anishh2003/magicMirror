@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:magicmirror/data/dropDownOptions.dart';
 import 'package:magicmirror/feature/workout/controller/workout_controller.dart';
 import 'package:magicmirror/feature/workoutList/controller/workout_list_controller.dart';
+import 'package:magicmirror/feature/workoutList/screen/workout_list_screen.dart';
 import 'package:magicmirror/model/exercise_set.dart';
 import 'package:magicmirror/model/workout.dart';
-import 'package:routemaster/routemaster.dart';
 import 'package:uuid/uuid.dart';
 
 class WorkoutScreen extends ConsumerStatefulWidget {
@@ -91,7 +92,7 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    Routemaster.of(ctx).pop();
+                    context.pop();
                   },
                   child: const Text('Cancel'),
                 ),
@@ -108,7 +109,7 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
 
                     // Trigger a UI update in the WorkoutScreen
                     setState(() {});
-                    Routemaster.of(ctx).pop();
+                    context.pop();
                     setState(() {});
                   },
                   child: const Text('Save'),
@@ -136,8 +137,7 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
     } else {
       workoutController.updateWorkout(workout);
     }
-
-    Routemaster.of(context).pop();
+    context.pop();
   }
 
   @override
