@@ -1,37 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:magicmirror/feature/workout/screen/workout_screen.dart';
 import 'package:magicmirror/feature/workoutList/repository/workout_list_repository.dart';
 import 'package:magicmirror/feature/workoutList/screen/workout_list_screen.dart';
 import 'package:magicmirror/model/workout.dart';
-import 'package:routemaster/routemaster.dart';
+
 import 'package:integration_test/integration_test.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   // Initialize your global provider container for testing
+
   final providerContainer = ProviderContainer();
 
-  final routesList = RouteMap(routes: {
-    '/': (_) => const MaterialPage(child: WorkoutListScreen()),
-    '/workout/:workoutId': (routeData) {
-      final workoutId = routeData.pathParameters['workoutId'];
+  final routerList = GoRouter(
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const WorkoutListScreen(),
+      ),
+      GoRoute(
+        path: '/workout/:workoutId',
+        builder: (context, state) {
+          final workoutId = state.pathParameters['workoutId'];
 
-      final repository = providerContainer.read(workoutListRepositoryProvider);
-
-      // Fetch the workout by ID
-      final workout =
-          workoutId != null ? repository.getWorkoutById(workoutId) : null;
-
-      return MaterialPage(
-        child: WorkoutScreen(
-          workout: workout,
-        ),
-      );
-    },
-  });
+          // Use the global provider container to read the repository provider
+          final repository =
+              providerContainer.read(workoutListRepositoryProvider);
+          // Fetch the workout by ID
+          final workout =
+              workoutId != null ? repository.getWorkoutById(workoutId) : null;
+          return WorkoutScreen(
+            workout: workout,
+          );
+        },
+      )
+    ],
+  );
 
   testWidgets('End-to-end test for creating and deleting a workout',
       (WidgetTester tester) async {
@@ -40,8 +48,7 @@ void main() {
         parent:
             providerContainer, // Provide the same container used in the router
         child: MaterialApp.router(
-          routeInformationParser: const RoutemasterParser(),
-          routerDelegate: RoutemasterDelegate(routesBuilder: (_) => routesList),
+          routerConfig: routerList,
         ),
       ),
     );
@@ -59,7 +66,7 @@ void main() {
 
     // Navigate to the WorkoutScreen using the valid workout ID
     final routemaster =
-        Routemaster.of(tester.element(find.byType(WorkoutListScreen)));
+        GoRouter.of(tester.element(find.byType(WorkoutListScreen)));
     routemaster.push('/workout/$workoutId'); // Now use a real workout ID
     await tester.pumpAndSettle();
 
